@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class TermsServicesController extends Controller
 {
+    public function index()
+    {
+        return view('terms-services.index');
+    }
     public function edit()
     {
         $terms = TermsServices::firstOrCreate([],['content'=>'Default Terms & Conditions']);

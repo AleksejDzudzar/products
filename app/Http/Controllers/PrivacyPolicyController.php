@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class PrivacyPolicyController extends Controller
 {
+    public function index()
+    {
+        return view('privacy-policy.index');
+    }
+
     public function edit()
     {
         $policy = PrivacyPolicy::firstOrCreate([], ['content' => 'Default Privacy Policy content']);

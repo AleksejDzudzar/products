@@ -3,19 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
 
 class Order extends Model
 {
     protected $fillable = [
-        'user_id',
-        'status',
-        'email',
-        'phone',
-        'total',
-        'shipping_address',
-        'payment_method',
+        'first_name', 'last_name', 'email', 'phone', 'city', 'street', 'postal_code', 'company', 'company_name', 'pib',
     ];
+
+    public function items()
+    {
+        return $this->hasMany(OrderItem::class);
+
+    }
     public function user()
     {
         return $this->belongsTo(User::class);

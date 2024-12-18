@@ -7,7 +7,6 @@
     <div class="content">
         <h2>Edit Terms & Services</h2>
 
-        <!-- Forma za ažuriranje -->
         <form action="{{ route('terms-services.update') }}" method="POST">
             @csrf
             @method('PUT')

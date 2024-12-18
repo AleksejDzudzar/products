@@ -20,14 +20,13 @@
                     <td>
                         <a href="{{ route('orders.show', $order) }}">{{ $order->id }}</a>
                     </td>
-                    <td>{{ $order->user->name }} | {{ $order->user->email }}</td>
-                    <td>{{ $order->total }}</td>
-                    <td>{{ $order->status }}</td>
+                    <td>{{ $order->first_name }} | {{ $order->email }}</td>
+                    <td>cena</td>
+                    <td>status</td>
                 </tr>
             @endforeach
             </tbody>
         </table>
 
-        {{ $orders->links() }}
     </div>
 @endsection

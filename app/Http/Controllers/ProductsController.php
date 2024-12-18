@@ -8,6 +8,60 @@ use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
+    public function home()
+    {
+        $products = Product::paginate(3);
+
+
+        return view('home', compact('products'));
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $categoryId = $request->input('category');
+        $sort = $request->input('sort');
+
+        $products = Product::query()
+            ->when($categoryId, function ($q) use ($categoryId) {
+                return $q->where('category_id', $categoryId);
+            })
+            ->when($query, function ($q) use ($query) {
+                return $q->where('name', 'like', '%' . $query . '%');
+            })
+            ->when($sort, function ($q) use ($sort) {
+                if ($sort === 'price-asc') {
+                    return $q->orderBy('price', 'asc');
+                } elseif ($sort === 'price-desc') {
+                    return $q->orderBy('price', 'desc');
+                }
+            })
+            ->paginate(9);
+
+        $categories = Category::all();
+
+        return view('shop', compact('products', 'categories', 'query', 'categoryId', 'sort'));
+    }
+
+
+    public function shop()
+    {
+        $products = Product::all();
+        $categories = Category::all();
+        return view('shop', compact('products', 'categories'));
+    }
+
+    public function show($id)
+    {
+        $product = Product::FindOrFail($id);
+        return view('products.show', compact('product'));
+    }
+
+    public function about()
+    {
+        return view('about');
+    }
+
     public function index()
     {
         $products = Product::all();
@@ -17,7 +71,7 @@ class ProductsController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('products.create',compact('categories'));
+        return view('products.create', compact('categories'));
 
     }
 
@@ -40,7 +94,7 @@ class ProductsController extends Controller
     public function edit(Product $product)
     {
         $categories = Category::all();
-        return view('products.edit', compact('product','categories'));
+        return view('products.edit', compact('product', 'categories'));
 
     }
 

@@ -13,15 +13,18 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('email');
             $table->string('phone');
-            $table->string('status')->default('pending');
-            $table->decimal('total', 8, 2)->default(0);
-            $table->string('payment_method')->default('paypal');
-            $table->string('shipping_address')->nullable();
+            $table->string('city');
+            $table->string('street');
+            $table->string('postal_code');
+            $table->boolean('company')->default(false);
+            $table->string('company_name')->nullable();
+            $table->string('pib')->nullable();
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
